@@ -1,2 +1,15 @@
-<h1>Check #<%= @check.id %></h1>
-<p><%= @check.payee @check.amount %></p>
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Payee:</b>
+  <%= @check.payee %>
+</p>
+
+<p>
+  <b>Amount:</b>
+  <%= @check.amount %>
+</p>
+
+
+<%= link_to 'Edit', edit_check_path(@check) %> |
+<%= link_to 'Back', checks_path %>
