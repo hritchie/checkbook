@@ -49,5 +49,9 @@ describe Check do
       @check.valid?.should be_false
       @check.should have(1).errors_on(:amount)
     end
+    it 'is associated with and account' do
+      pending
+      @check.account.should_be instance_of(Account)
+    end
   end
 end
