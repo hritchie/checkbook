@@ -1,5 +1,8 @@
 Checkbook::Application.routes.draw do
 
+  resources :accounts
+
+
   resources :checks
 
   root :to => 'checks#index'
