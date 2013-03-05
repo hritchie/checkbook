@@ -8,4 +8,11 @@ describe Account do
   it "has a valid factory" do
     @account.should be_valid 
   end
+
+  context "A new account" do
+    it "has a zero initial balance" do
+      @account.balance.should equal(0)
+    end
+  end
+
 end

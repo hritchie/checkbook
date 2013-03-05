@@ -5,4 +5,8 @@ class Account < ActiveRecord::Base
   def init
     self.initial_balance = 0
   end
+
+  def balance
+    initial_balance
+  end
 end
