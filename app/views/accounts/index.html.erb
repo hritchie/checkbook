@@ -10,12 +10,10 @@
 
 <% @accounts.each do |account| %>
   <tr>
-    <% @accounts.each do |account| %>
-      <td><%= account.name %>
+      <td><%= account.name %></td>
       <td><%= link_to 'Show', account %></td>
       <td><%= link_to 'Edit', edit_account_path(account) %></td>
       <td><%= link_to 'Destroy', account, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-    <% end %>
   </tr>
 <% end %>
 </table>
