@@ -1,5 +1,5 @@
 FactoryGirl.define do
-  factory :account do |f|
+  factory :invalid_account do |f|
     
   end
 end
