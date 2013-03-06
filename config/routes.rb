@@ -2,9 +2,11 @@ Checkbook::Application.routes.draw do
 
   resources :accounts
 
-  resources :checks
+  scope 'accounts/:id', :as => 'account' do
+    resources :checks
+  end
 
-  root :to => 'checks#index'
+  root :to => 'accounts#index'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
