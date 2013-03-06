@@ -1,12 +1,13 @@
 require 'spec_helper'
 
 describe ChecksController do
-  before(:each) do
-    @check = FactoryGirl.create(:check)
-#    @account = @check.account
-  end
 
   describe "GET index" do
+    before(:each) do
+      @check = FactoryGirl.create(:check)
+  #    @account = @check.account
+    end
+
     it "assigns all checks as @checks" do
       get :index, account_id: @check.account_id
       assigns(:checks).should eq([@check])
