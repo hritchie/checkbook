@@ -3,6 +3,7 @@ require 'spec_helper'
 describe Check do
   before(:each) do
     @check = FactoryGirl.create(:check)
+#    @check = Check.new
   end
 
   it "has a valid factory" do

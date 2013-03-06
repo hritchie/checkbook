@@ -1,4 +1,5 @@
 class Account < ActiveRecord::Base
+  has_many :checks
   attr_accessible :name
   before_create :init
 
