@@ -2,15 +2,12 @@ require 'spec_helper'
 
 
 describe AccountsController do
-  before(:each) do
-    @account = FactoryGirl.create(:account)
-  end
-
 
   describe "GET index" do
     it "assigns all accounts as @accounts" do
+      account = FactoryGirl.create(:account)
       get :index
-      assigns(:accounts).should eq([@account])
+      assigns(:accounts).should eq([account])
     end
 
     it 'renders the index template' do
@@ -21,8 +18,9 @@ describe AccountsController do
 
   describe "GET show" do
     it "assigns the requested account as @account" do
-      get :show, id: @account.id
-      assigns(:account).should eq(@account)
+      account = FactoryGirl.create(:account)
+      get :show, id: account.id
+      assigns(:account).should eq(account)
     end
   end
 
@@ -35,13 +33,14 @@ describe AccountsController do
 
   describe "GET edit" do
     it "assigns the requested account as @account" do
-      get :edit, id: @account.id
-      assigns(:account).should eq(@account)
+      account = FactoryGirl.create(:account)
+      get :edit, id: account.id
+      assigns(:account).should eq(account)
     end
   end
 
   describe "POST create" do
-    describe "with valid params" do
+    describe "with valid attributes" do
       it "creates a new Account" do
         expect {
           post :create, account: FactoryGirl.attributes_for(:account)
@@ -60,80 +59,74 @@ describe AccountsController do
       end
     end
 
-    describe "with invalid params" do
-      it "assigns a newly created but unsaved account as @account" do
-        # Trigger the behavior that occurs when invalid params are submitted
-        Account.any_instance.stub(:save).and_return(false)
-        post :create, {:account => {  }}, valid_session
-        assigns(:account).should be_a_new(Account)
+    describe "with invalid attributes" do
+      it "does not save the new account" do
+        expect{
+          post :create, account: FactoryGirl.attributes_for(:invalid_account)
+        }.to_not change(Account, :count)
       end
 
       it "re-renders the 'new' template" do
-        # Trigger the behavior that occurs when invalid params are submitted
-        Account.any_instance.stub(:save).and_return(false)
-        post :create, {:account => {  }}, valid_session
-        response.should render_template("new")
+        post :create, account: FactoryGirl.attributes_for(:invalid_account)
+        response.should render_template :new
       end
     end
   end
 
   describe "PUT update" do
-    describe "with valid params" do
+    before :each do
+      @account = FactoryGirl.create(:account, name: 'Test Account Name')
+    end
+
+    describe "with valid attributes" do
+      it 'should locate the requested @account' do
+        put :update, id: @account, account: FactoryGirl.attributes_for(:account)
+        assigns(:account).should eq(@account)
+      end
+
       it "updates the requested account" do
-        account = Account.create! valid_attributes
-        # Assuming there are no other accounts in the database, this
-        # specifies that the Account created on the previous line
-        # receives the :update_attributes message with whatever params are
-        # submitted in the request.
-        Account.any_instance.should_receive(:update_attributes).with({ "these" => "params" })
-        put :update, {:id => account.to_param, :account => { "these" => "params" }}, valid_session
+        put :update, id: @account, 
+          account: FactoryGirl.attributes_for(:account, name: 'Changed Acct. Name')
+        @account.reload
+        @account.name.should eq('Changed Acct. Name')
       end
 
-      it "assigns the requested account as @account" do
-        account = Account.create! valid_attributes
-        put :update, {:id => account.to_param, :account => valid_attributes}, valid_session
-        assigns(:account).should eq(account)
-      end
 
-      it "redirects to the account" do
-        account = Account.create! valid_attributes
-        put :update, {:id => account.to_param, :account => valid_attributes}, valid_session
-        response.should redirect_to(account)
+      it "redirects to the updated account" do
+        put :update, id: @account, account: FactoryGirl.attributes_for(:account)
+        response.should redirect_to @account
       end
     end
 
     describe "with invalid params" do
-      it "assigns the account as @account" do
-        account = Account.create! valid_attributes
-        # Trigger the behavior that occurs when invalid params are submitted
-        Account.any_instance.stub(:save).and_return(false)
-        put :update, {:id => account.to_param, :account => {  }}, valid_session
-        assigns(:account).should eq(account)
+      it "locates the requested @account" do
+        put :update, id: @account, 
+          account: FactoryGirl.attributes_for(:invalid_account)
+        assigns(:account).should eq(@account)
       end
 
       it "re-renders the 'edit' template" do
-        account = Account.create! valid_attributes
-        # Trigger the behavior that occurs when invalid params are submitted
-        Account.any_instance.stub(:save).and_return(false)
-        put :update, {:id => account.to_param, :account => {  }}, valid_session
-        response.should render_template("edit")
+        put :update, id: @account, 
+          account: FactoryGirl.attributes_for(:invalid_account)
+        response.should render_template :edit
       end
     end
   end
 
   describe "DELETE destroy" do
+    before(:each) do
+      @account = FactoryGirl.create(:account)
+    end
+
     it "destroys the requested account" do
-      account = Account.create! valid_attributes
       expect {
-        delete :destroy, {:id => account.to_param}, valid_session
+        delete :destroy, id: @account
       }.to change(Account, :count).by(-1)
     end
 
     it "redirects to the accounts list" do
-      account = Account.create! valid_attributes
-      delete :destroy, {:id => account.to_param}, valid_session
-      response.should redirect_to(accounts_url)
+      delete :destroy, id: @account
+      response.should redirect_to accounts_url
     end
   end
-
 end
