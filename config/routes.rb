@@ -1,8 +1,8 @@
 Checkbook::Application.routes.draw do
 
-  resources :accounts
+  resources :accounts 
 
-  scope 'accounts/:id', :as => 'account' do
+  scope 'accounts/:account_id', :as => 'account' do
     resources :checks
   end
 

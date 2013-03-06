@@ -2,7 +2,7 @@ class ChecksController < ApplicationController
   # GET /checks
   # GET /checks.json
   def index
-    @checks = Check.all
+    @checks = Account.find(params[:account_id]).checks
 
     respond_to do |format|
       format.html # index.html.erb
