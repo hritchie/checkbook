@@ -10,18 +10,18 @@
     <th></th>
   </tr>
 
-<% @checks.each do |check| %>
+<% @checks.each do |chck| %>
   <tr>
-    <td><%= check.payee %></td>
-    <td><%= check.amount %></td>
-    <td><%= check.account_name %></td>
-    <td><%= link_to 'Show', check %></td>
-    <td><%= link_to 'Edit', edit_check_path(check) %></td>
-    <td><%= link_to 'Destroy', check, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    <td><%= chck.payee %></td>
+    <td><%= chck.amount %></td>
+    <td><%= chck.account_name %></td>
+
+    <td><%= link_to 'Edit', edit_account_check_path(@account, chck) %></td>
+    <td><%= link_to 'Destroy', account_check_path(@account, chck), method: :delete, data: { confirm: 'Are you sure?' } %></td>
   </tr>
 <% end %>
 </table>
 
 <br />
 
-<%= link_to 'New Check', new_check_path %>
+<%= link_to 'New Check', new_account_check_path(@account) %>

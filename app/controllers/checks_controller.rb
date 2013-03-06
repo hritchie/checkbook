@@ -2,7 +2,8 @@ class ChecksController < ApplicationController
   # GET /checks
   # GET /checks.json
   def index
-    @checks = Account.find(params[:account_id]).checks
+    @account = Account.find(params[:account_id])
+    @checks = @account.checks
 
     respond_to do |format|
       format.html # index.html.erb
@@ -13,7 +14,8 @@ class ChecksController < ApplicationController
   # GET /checks/1
   # GET /checks/1.json
   def show
-    @check = Check.find(params[:id])
+    @account = Account.find(params[:account_id])
+    @check = @account.checks.find(params[:id])
 
     respond_to do |format|
       format.html # show.html.erb
@@ -24,7 +26,9 @@ class ChecksController < ApplicationController
   # GET /checks/new
   # GET /checks/new.json
   def new
+    @account = Account.find(params[:account_id])
     @check = Check.new
+    @check.account = @account
 
     respond_to do |format|
       format.html # new.html.erb
@@ -34,7 +38,8 @@ class ChecksController < ApplicationController
 
   # GET /checks/1/edit
   def edit
-    @check = Check.find(params[:id])
+    @account = Account.find(params[:account_id])
+    @check = @account.checks.find(params[:id])
   end
 
   # POST /checks
@@ -44,7 +49,7 @@ class ChecksController < ApplicationController
 
     respond_to do |format|
       if @check.save
-        format.html { redirect_to @check, notice: 'Check was successfully created.' }
+        format.html { redirect_to account_check_path(@check.account, @check), notice: 'Check was successfully created.' }
         format.json { render json: @check, status: :created, location: @check }
       else
         format.html { render action: "new" }
@@ -56,7 +61,8 @@ class ChecksController < ApplicationController
   # PUT /checks/1
   # PUT /checks/1.json
   def update
-    @check = Check.find(params[:id])
+    @account = Account.find(params[:account_id])
+    @check = @account.checks.find(params[:id])
 
     respond_to do |format|
       if @check.update_attributes(params[:check])
@@ -72,7 +78,8 @@ class ChecksController < ApplicationController
   # DELETE /checks/1
   # DELETE /checks/1.json
   def destroy
-    @check = Check.find(params[:id])
+    @account = Account.find(params[:account_id])
+    @check = @account.checks.find(params[:id])
     @check.destroy
 
     respond_to do |format|
