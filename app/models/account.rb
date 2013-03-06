@@ -1,6 +1,7 @@
 class Account < ActiveRecord::Base
   has_many :checks
   attr_accessible :name
+  validates :name, presence: true
   before_create :init
 
   def init
