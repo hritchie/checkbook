@@ -51,8 +51,13 @@ describe Check do
       @check.should have(1).errors_on(:amount)
     end
     it 'is associated with and account' do
-      pending
-      @check.account.should_be instance_of(Account)
+      @check.account.should be_an_instance_of(Account)
+    end
+    it 'returns its account name' do
+      account = FactoryGirl.create(:account)
+      account.name = "account_name_string"
+      @check.account = account
+      @check.account_name.should eq('account_name_string')
     end
   end
 end
