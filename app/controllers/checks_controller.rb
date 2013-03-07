@@ -46,13 +46,12 @@ class ChecksController < ApplicationController
   # POST /checks.json
   def create
     @account = Account.find(params[:account_id])
-    @check = Check.new(params[:check])
-    @check.account_id = @account.id
+    @check = @account.checks.build(params[:check])
     
 
     respond_to do |format|
       if @check.save
-        format.html { redirect_to account_check_path(@account, @check), notice: 'Check was successfully created.' }
+        format.html { redirect_to account_check_path(@account.id, @check.id), notice: 'Check was successfully created.' }
         format.json { render json: @check, status: :created, location: @check }
       else
         format.html { render action: "new" }
