@@ -28,6 +28,8 @@ group :development, :test do
   gem 'guard'
   gem 'guard-spork'
   gem 'rspec-rails'
+  gem 'better_errors'
+  gem "binding_of_caller"
 end
 
 group :test do
