@@ -85,7 +85,7 @@ class ChecksController < ApplicationController
     @check.destroy
 
     respond_to do |format|
-      format.html { redirect_to checks_url }
+      format.html { redirect_to account_checks_path(@account) }
       format.json { head :no_content }
     end
   end

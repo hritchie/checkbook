@@ -51,10 +51,10 @@ describe ChecksController do
   end
 
   describe "POST create" do
+    before(:each) do
+      @account = FactoryGirl.create(:account)
+    end
     describe "with valid attributes" do
-      before(:each) do
-        @account = FactoryGirl.create(:account)
-      end
       it "creates a new Check" do
         expect {
           post :create, account_id: @account.id, check: FactoryGirl.attributes_for(:check)
@@ -75,17 +75,73 @@ describe ChecksController do
 
     describe "with invalid attributes" do
       it "does not save the new check" do
-        pending
         expect{
-          post :create, check: FactoryGirl.attributes_for(:invalid_check)
+          post :create, account_id: @account.id, check: FactoryGirl.attributes_for(:invalid_check)
         }.to_not change(Account, :count)
       end
 
       it "re-renders the 'new' template" do
-        pending
-        post :create, check: FactoryGirl.attributes_for(:invalid_check)
+        post :create, account_id: @account.id, check: FactoryGirl.attributes_for(:invalid_check)
         response.should render_template :new
       end
+    end
+  end
+
+  describe 'PUT update' do
+    before(:each) do
+      @check = FactoryGirl.create(:check, payee: "Updatable Payee")
+    end
+
+    context 'with valid attributes' do
+      it 'locates the requested @check' do
+        put :update, account_id: @check.account_id, 
+          id: @check, check: FactoryGirl.attributes_for(:check)
+        assigns(:check).should eq(@check)
+      end
+
+      it 'updated the requested check' do
+        put :update, account_id: @check.account_id, 
+          id: @check, check: FactoryGirl.attributes_for(:check, payee: 'changed payee')
+        @check.reload
+        @check.payee.should eq('changed payee')
+      end
+
+      it 'redirects to the updated check' do
+        put :update, account_id: @check.account_id, 
+          id: @check, check: FactoryGirl.attributes_for(:check)
+        response.should redirect_to(account_check_path(@check.account, @check))
+      end
+    end
+
+    context 'with invalid params' do
+      it 'locates the requested check' do
+        put :update, account_id: @check.account_id, 
+          id: @check, check: FactoryGirl.attributes_for(:invalid_check)
+        assigns(:check).should eq(@check)
+      end
+
+      it "re-renders the 'edit' template" do
+        put :update, account_id: @check.account_id, 
+          id: @check, check: FactoryGirl.attributes_for(:invalid_check)
+        response.should render_template :edit
+      end
+    end
+  end
+
+  describe 'DELETE destroy' do
+    before(:each) do
+      @check = FactoryGirl.create(:check)
+    end
+
+    it 'destroys the requested check' do
+      expect {
+        delete :destroy, account_id: @check.account_id, id: @check
+      }.to change(Check, :count).by(-1)
+    end
+
+    it "redirects to the account's checks list" do
+        delete :destroy, account_id: @check.account_id, id: @check
+        response.should redirect_to account_checks_url(@check.account)
     end
   end
 end
