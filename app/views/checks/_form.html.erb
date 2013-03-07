@@ -1,4 +1,4 @@
-<%= form_for @check, url: account_checks_path, account_id: @check.account_id do |f| %>
+<%= form_for @check, url: account_check_path, account_id: @account, id: @check do |f| %>
   <% if @check.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@check.errors.count, "error") %> prohibited this check from being saved:</h2>

@@ -2,5 +2,5 @@
 
 <%= render 'form' %>
 
-<%= link_to 'Show', @check %> |
-<%= link_to 'Back', checks_path %>
+<%= link_to 'Show', account_check_path(@check.account, @check) %> |
+<%= link_to 'Back', account_checks_path(@check.account) %>
