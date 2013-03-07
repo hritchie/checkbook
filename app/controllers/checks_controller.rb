@@ -45,11 +45,14 @@ class ChecksController < ApplicationController
   # POST /checks
   # POST /checks.json
   def create
+    @account = Account.find(params[:account_id])
     @check = Check.new(params[:check])
+    @check.account_id = @account.id
+    
 
     respond_to do |format|
       if @check.save
-        format.html { redirect_to account_check_path(@check.account, @check), notice: 'Check was successfully created.' }
+        format.html { redirect_to account_check_path(@account, @check), notice: 'Check was successfully created.' }
         format.json { render json: @check, status: :created, location: @check }
       else
         format.html { render action: "new" }
@@ -66,7 +69,7 @@ class ChecksController < ApplicationController
 
     respond_to do |format|
       if @check.update_attributes(params[:check])
-        format.html { redirect_to @check, notice: 'Check was successfully updated.' }
+        format.html { redirect_to account_check_path(@accoun.id, @check), notice: 'Check was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }

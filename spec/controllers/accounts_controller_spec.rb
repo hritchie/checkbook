@@ -1,6 +1,5 @@
 require 'spec_helper'
 
-
 describe AccountsController do
 
   describe "GET index" do
@@ -12,7 +11,7 @@ describe AccountsController do
 
     it 'renders the index template' do
       get :index
-      response.should render_template('index')
+      response.should render_template :index
     end
   end
 
@@ -22,6 +21,11 @@ describe AccountsController do
       get :show, id: account.id
       assigns(:account).should eq(account)
     end
+
+    it "renders the #show view" do
+      get :show, id: FactoryGirl.create(:account)
+      response.should render_template :show
+    end 
   end
 
   describe "GET new" do
