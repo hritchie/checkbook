@@ -1,0 +1,28 @@
+%h1= "Details for Account: #{ @account.name }"
+
+%table
+  %tr
+    %th Payee
+    %th Amount
+    %th Balance
+
+  %tr
+    %td Initial Balance
+    %td 
+    %td= @account.initial_balance 
+
+  - final_balance = @checks.inject(0) do |balance, chck| 
+    %tr
+      %td= link_to chck.payee, account_check_path(@account, chck) 
+      %td= chck.amount 
+      %td= balance + chck.amount
+    - balance + chck.amount
+
+  %tr
+    %td Final Balance
+    %td
+    %td= final_balance
+
+
+
+= link_to 'New Check', new_account_check_path(@account)
