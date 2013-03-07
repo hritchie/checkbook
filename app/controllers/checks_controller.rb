@@ -69,7 +69,7 @@ class ChecksController < ApplicationController
 
     respond_to do |format|
       if @check.update_attributes(params[:check])
-        format.html { redirect_to account_check_path(@accoun.id, @check), notice: 'Check was successfully updated.' }
+        format.html { redirect_to account_check_path(@account.id, @check), notice: 'Check was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
