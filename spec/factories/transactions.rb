@@ -1,5 +1,5 @@
 FactoryGirl.define do
-  factory :check do 
+  factory :transaction do 
     payee "mr. payee"
     amount 10 
     account

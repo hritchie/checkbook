@@ -1,10 +1,10 @@
-<%= form_for @check, url: account_check_path, account_id: @account, id: @check do |f| %>
-  <% if @check.errors.any? %>
+<%= form_for @transaction, url: account_transaction_path, account_id: @account, id: @transaction do |f| %>
+  <% if @transaction.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(@check.errors.count, "error") %> prohibited this check from being saved:</h2>
+      <h2><%= pluralize(@transaction.errors.count, "error") %> prohibited this transaction from being saved:</h2>
 
       <ul>
-      <% @check.errors.full_messages.each do |msg| %>
+      <% @transaction.errors.full_messages.each do |msg| %>
         <li><%= msg %></li>
       <% end %>
       </ul>

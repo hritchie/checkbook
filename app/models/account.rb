@@ -1,5 +1,5 @@
 class Account < ActiveRecord::Base
-  has_many :checks
+  has_many :transactions
   attr_accessible :name
   validates :name, presence: true
   before_create :init

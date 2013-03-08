@@ -3,7 +3,7 @@ Checkbook::Application.routes.draw do
   resources :accounts 
 
   scope 'accounts/:account_id', :as => 'account' do
-    resources :checks
+    resources :transactions
   end
 
   root :to => 'accounts#index'

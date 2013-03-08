@@ -11,9 +11,9 @@
     %td 
     %td= @account.initial_balance 
 
-  - final_balance = @checks.inject(0) do |balance, chck| 
+  - final_balance = @transactions.inject(0) do |balance, chck| 
     %tr
-      %td= link_to chck.payee, account_check_path(@account, chck) 
+      %td= link_to chck.payee, account_transaction_path(@account, chck) 
       %td= chck.amount 
       %td= balance + chck.amount
     - balance + chck.amount
@@ -25,4 +25,4 @@
 
 
 
-= link_to 'New Check', new_account_check_path(@account)
+= link_to 'New Transaction', new_account_transaction_path(@account)

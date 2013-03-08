@@ -1,4 +1,4 @@
-class Check < ActiveRecord::Base
+class Transaction < ActiveRecord::Base
   belongs_to :account
   attr_accessible :amount, :payee, :account_id
 
